@@ -5,11 +5,21 @@ resource "aws_instance" "mongodb"{
   tags = {
     Name = "mongodb-dev"
   }
+
+}
+resource "aws_route53_record" "mongodb" {
+  zone_id = "Z02373281TX1LHFU7BPXU"
+  name    = "mongodb-dev"
+  type    = "A"
+  ttl     = 10
+  records = [aws_instance.mongodb.private_ip]
+}
+resource "null_resource" "mongodb" {
   connection {
     type     = "ssh"
     user     = "ec2-user"
     password = "DevOps321"
-    host     = self.public_ip
+    host     = aws_instance.mongodb.private_ip
   }
 
   provisioner "remote-exec" {
@@ -18,11 +28,5 @@ resource "aws_instance" "mongodb"{
       "ansible-pull -i localhost -U https://github.com/Krishna615/roboshop-ansible.git roboshop.yml -e component_name=mongodb -e env=dev",
     ]
   }
-}
-resource "aws_route53_record" "mongodb" {
-  zone_id = "Z02373281TX1LHFU7BPXU"
-  name    = "mongodb-dev"
-  type    = "A"
-  ttl     = 10
-  records = [aws_instance.mongodb.private_ip]
+
 }
