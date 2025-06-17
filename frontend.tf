@@ -6,3 +6,10 @@ resource "aws_instance" "frontend-dev"{
     Name = "frontend-dev"
   }
 }
+resource "aws_route53_record" "frontend" {
+  zone_id = "Z02373281TX1LHFU7BPXU"
+  name    = "frontend-dev"
+  type    = "A"
+  ttl     = 10
+  records = [aws_instace.frontend.private_ip]
+}

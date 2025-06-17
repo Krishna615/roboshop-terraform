@@ -6,3 +6,10 @@ resource "aws_instance" "catalogue"{
     Name = "catalogue-dev"
   }
 }
+resource "aws_route53_record" "catalogue" {
+  zone_id = "Z02373281TX1LHFU7BPXU"
+  name    = "catalogue-dev"
+  type    = "A"
+  ttl     = 10
+  records = [aws_instace.catalogue.private_ip]
+}
