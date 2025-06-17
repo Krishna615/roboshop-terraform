@@ -5,6 +5,7 @@ resource "aws_instance" "frontend"{
   tags = {
     Name = "frontend-dev"
   }
+
 }
 resource "aws_route53_record" "frontend" {
   zone_id = "Z02373281TX1LHFU7BPXU"
@@ -13,3 +14,4 @@ resource "aws_route53_record" "frontend" {
   ttl     = 10
   records = [aws_instance.frontend.private_ip]
 }
+
