@@ -16,6 +16,7 @@ resource "aws_route53_record" "frontend" {
 }
 
 resource "null_resource" "frontend" {
+  provisioner "remote-exec" {
   connection {
     type     = "ssh"
     user     = "ec2-user"
@@ -23,7 +24,7 @@ resource "null_resource" "frontend" {
     host     = aws_instance.frontend.private_ip
   }
 
-  provisioner "remote-exec" {
+
     inline = [
       "sudo pip3.11 install ansible",
       "ansible-pull -i localhost -U https://github.com/Krishna615/roboshop-ansible.git roboshop.yml -e component_name=frontend -e env=dev",

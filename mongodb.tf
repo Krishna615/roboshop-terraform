@@ -15,6 +15,7 @@ resource "aws_route53_record" "mongodb" {
   records = [aws_instance.mongodb.private_ip]
 }
 resource "null_resource" "mongodb" {
+  provisioner "remote-exec" {
   connection {
     type     = "ssh"
     user     = "ec2-user"
@@ -22,7 +23,7 @@ resource "null_resource" "mongodb" {
     host     = aws_instance.mongodb.private_ip
   }
 
-  provisioner "remote-exec" {
+
     inline = [
       "sudo pip3.11 install ansible",
       "ansible-pull -i localhost -U https://github.com/Krishna615/roboshop-ansible.git roboshop.yml -e component_name=mongodb -e env=dev",
