@@ -11,5 +11,5 @@ resource "aws_route53_record" "catalogue" {
   name    = "catalogue-dev"
   type    = "A"
   ttl     = 10
-  records = [aws_instace.catalogue.private_ip]
+  records = [aws_instance.catalogue.private_ip]
 }

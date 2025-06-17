@@ -11,5 +11,5 @@ resource "aws_route53_record" "mongodb" {
   name    = "mongodb-dev"
   type    = "A"
   ttl     = 10
-  records = [aws_instace.mongodb.private_ip]
+  records = [aws_instance.mongodb.private_ip]
 }
