@@ -11,7 +11,7 @@ resource "aws_instance" "instance"{
 resource "aws_route53_record" "catalogue" {
   for_each = var.instance
   zone_id = var.zone_id
-  name    = "${each.key} - ${[var.env]}"
+  name    = "${each.key} - ${var.env}"
   type    = "A"
   ttl     = 10
   records = [aws_instance.instance[each.key].private_ip]
