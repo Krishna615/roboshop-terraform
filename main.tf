@@ -1,7 +1,7 @@
 resource "aws_instance" "instance"{
-  for_each = var.instance_type
-  ami = each.value["ami"]
-  instance_type = each.value["instance"]
+  for_each = var.instances
+  ami = each.value["ami_id"]
+  instance_type = each.value["instance_type"]
   vpc_security_group_ids = each.value["vpc_security_group_ids"]
   tags = {
     Name = each.key
@@ -9,7 +9,7 @@ resource "aws_instance" "instance"{
 
 }
 resource "aws_route53_record" "record" {
-  for_each = var.instance_type
+  for_each = var.instances
   zone_id = var.zone_id
   name    = "${each.key} - ${var.env}"
   type    = "A"
