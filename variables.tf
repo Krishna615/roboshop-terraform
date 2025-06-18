@@ -5,8 +5,7 @@ variable "instance_type" {
   default= "t2.micro"
 }
 variable "vpc_security_group_ids" {
-  type = any
-  default = "sg-087a8efc6ad6a9899"
+  default = ["sg-087a8efc6ad6a9899"]
 }
 variable "instance" {
   default = {
