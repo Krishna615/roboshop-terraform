@@ -17,6 +17,7 @@ resource "aws_route53_record" "record" {
 }
 
 resource "null_resource" "catalogue" {
+  depends_on = [aws_route53_record.record]
   provisioner "remote-exec" {
   connection {
     type     = "ssh"
@@ -28,7 +29,7 @@ resource "null_resource" "catalogue" {
 
     inline = [
       "sudo pip3.11 install ansible",
-      "ansible-pull -i localhost -U https://github.com/Krishna615/roboshop-ansible.git roboshop.yml -e component_name=${var.name} -e env=${var.env}",
+      "ansible-pull -i localhost -U https://github.com/Krishna615/roboshop-ansible.git roboshop.yml -e component_name=${var.name} -e env=${var.env}"
     ]
   }
 
